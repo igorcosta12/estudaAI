@@ -217,11 +217,12 @@ O passo a passo de deploy está em [`GUIA-DEPLOY.md`](GUIA-DEPLOY.md).
 
 ## 9. Integrantes do grupo
 
-| Nome completo | RA | Parte que construiu (defesa individual) |
-|---------------|----|------------------------------------------|
-| Igor Costa | *23215764-2* | System prompt, few-shot e coleta de tokens/custo |
-| *Gabriel Rodrigues Soares* | *23038182-2* | *Curadoria de contexto (teste/A/B)* |
-| *Hugo Vinícius Fonseca Zuin* | *23000248-2* | *JSON mode + deploy/segurança da chave* |
+| Nome completo | RA | 
+|---------------|----|
+| Igor Costa | *23215764-2* | 
+| *Gabriel Rodrigues Soares* | *23038182-2* | 
+| *Hugo Vinícius Fonseca Zuin* | *23000248-2* | 
+| *Henrique Pacheco Alves*  | *23293915-2* | 
 
 A nota é individual: cada integrante deve saber explicar a própria parte (o prompt que escreveu, os dados
 que coletou). Combinamos antes da apresentação quem defende cada trecho.
