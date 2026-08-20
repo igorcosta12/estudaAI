@@ -245,7 +245,7 @@ TAREFA: Gere ${n} questões de múltipla escolha de dificuldade ${diff} sobre es
   setStatus(`<span class="spinner"></span>Gerando ${n} questões com ${model}…`);
   try {
     const { text, usage } = await callGemini({
-      model, systemPrompt: SYSTEM_PROMPT, fewShot: null, userText, useSchema: true
+      model, systemPrompt: SYSTEM_PROMPT, fewShot: FEW_SHOT, userText, useSchema: true
     });
     const custo = logCall("geração", model, usage);
     quizData = parseJsonLoose(text);
