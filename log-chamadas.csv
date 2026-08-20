@@ -1,0 +1,5 @@
+n,hora,tipo,modelo,tokens_in,tokens_out,thoughts,custo_usd
+1,16:06:29,"contexto A (completo)",gemini-3.6-flash,1971,335,1422,0.008067
+2,16:06:35,"contexto B (trecho)",gemini-3.6-flash,584,287,649,0.003948
+3,16:12:12,"geração",gemini-3.6-flash,1738,1250,2961,0.017095
+4,16:12:41,"contexto A (completo)",gemini-3.6-flash,1971,285,1024,0.006387
