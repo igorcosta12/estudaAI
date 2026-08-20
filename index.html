@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Estuda Aí — Gerador de Simulados com IA</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <h1>🧠 Estuda Aí</h1>
+      <p class="tagline">Cole o material de uma matéria e gere um simulado de múltipla escolha com o Gemini —
+        com <strong>painel de tokens e custo</strong> embutido para as evidências do trabalho.</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- ============ CONFIG ============ -->
+    <section class="card">
+      <h2>1. Configuração</h2>
+      <div class="grid">
+        <label class="field span2">
+          <span>Chave da API do Gemini (AI Studio)</span>
+          <input id="apiKey" type="password" placeholder="cole sua API key aqui (nunca vai pro repositório)" autocomplete="off" />
+          <small>A chave fica só no seu navegador. Não é enviada pra lugar nenhum além da API do Google e nunca é
+            salva no código. Pegue a sua em <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">aistudio.google.com/app/apikey</a>.</small>
+        </label>
+        <label class="field">
+          <span>Modelo</span>
+          <select id="model">
+            <option value="gemini-2.5-flash">gemini-2.5-flash (US$0,30 in / US$2,50 out por 1M)</option>
+            <option value="gemini-2.5-flash-lite">gemini-2.5-flash-lite (US$0,10 in / US$0,40 out por 1M)</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Nº de questões</span>
+          <select id="numQuestions">
+            <option>3</option>
+            <option selected>5</option>
+            <option>10</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Dificuldade</span>
+          <select id="difficulty">
+            <option value="fácil">Fácil</option>
+            <option value="médio" selected>Médio</option>
+            <option value="difícil">Difícil</option>
+          </select>
+        </label>
+      </div>
+    </section>
+
+    <!-- ============ MATERIAL ============ -->
+    <section class="card">
+      <h2>2. Material de estudo</h2>
+      <p class="muted">Cole o conteúdo da matéria que você quer estudar. Esse texto vira o contexto enviado ao modelo.</p>
+      <textarea id="material" rows="10" placeholder="Cole aqui o resumo, capítulo ou anotações da matéria…"></textarea>
+      <div class="row">
+        <button id="loadExample" class="btn ghost">📄 Carregar material de exemplo (Normalização de BD)</button>
+        <span id="materialInfo" class="muted small"></span>
+      </div>
+    </section>
+
+    <!-- ============ AÇÕES ============ -->
+    <section class="card">
+      <h2>3. Gerar</h2>
+      <div class="row">
+        <button id="generate" class="btn primary">✨ Gerar simulado</button>
+        <button id="openContextTest" class="btn">📊 Teste de Curadoria de Contexto</button>
+      </div>
+      <div id="status" class="status" hidden></div>
+    </section>
+
+    <!-- ============ QUIZ ============ -->
+    <section id="quizCard" class="card" hidden>
+      <h2>Simulado</h2>
+      <form id="quizForm"></form>
+      <div class="row">
+        <button id="submitQuiz" class="btn primary" type="button">Corrigir</button>
+        <span id="score" class="score"></span>
+      </div>
+    </section>
+
+    <!-- ============ LOG / EVIDÊNCIAS ============ -->
+    <section class="card">
+      <h2>📈 Log de chamadas (evidências)</h2>
+      <p class="muted small">Cada chamada à API é registrada aqui com tokens de entrada/saída e custo estimado.
+        Use os botões para exportar e anexar no README do trabalho.</p>
+      <div class="tablewrap">
+        <table id="logTable">
+          <thead>
+            <tr>
+              <th>#</th><th>Hora</th><th>Tipo</th><th>Modelo</th>
+              <th>Tokens in</th><th>Tokens out</th><th>Thoughts</th><th>Custo (US$)</th>
+            </tr>
+          </thead>
+          <tbody id="logBody"></tbody>
+          <tfoot>
+            <tr>
+              <td colspan="4"><strong>Total da sessão</strong></td>
+              <td id="totIn">0</td><td id="totOut">0</td><td id="totThoughts">0</td><td id="totCost">$0,000000</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <div class="row">
+        <button id="copyMd" class="btn ghost">📋 Copiar tabela (Markdown)</button>
+        <button id="downloadCsv" class="btn ghost">⬇️ Baixar CSV</button>
+        <button id="downloadJson" class="btn ghost">⬇️ Baixar JSON</button>
+        <button id="clearLog" class="btn ghost danger">🗑️ Limpar log</button>
+      </div>
+      <p class="muted small formula">
+        Fórmula: <code>custo = (tokens_in / 1.000.000) × preço_in + (tokens_out / 1.000.000) × preço_out</code><br>
+        Preços da tabela oficial do Google (paid tier). Uso real no free tier custa R$0; o valor acima é o
+        <strong>custo hipotético</strong> como se fosse pago.
+      </p>
+    </section>
+  </main>
+
+  <!-- ============ MODAL: TESTE DE CONTEXTO ============ -->
+  <div id="contextModal" class="modal" hidden>
+    <div class="modal-box">
+      <button id="closeContext" class="modal-close" aria-label="Fechar">×</button>
+      <h2>📊 Teste de Curadoria de Contexto</h2>
+      <p class="muted small">Faz a <strong>mesma pergunta</strong> de duas formas e compara os tokens de entrada.
+        Versão A manda o material inteiro; versão B manda só o trecho relevante. É o equivalente medido do
+        <code>@file</code> vs. <code>@trecho</code> (requisito 3).</p>
+
+      <label class="field">
+        <span>Pergunta (idêntica nas duas versões)</span>
+        <input id="ctxQuestion" type="text" />
+      </label>
+      <label class="field">
+        <span>A) Contexto completo — material inteiro</span>
+        <textarea id="ctxFull" rows="6"></textarea>
+      </label>
+      <label class="field">
+        <span>B) Só o trecho relevante</span>
+        <textarea id="ctxSnippet" rows="4"></textarea>
+      </label>
+
+      <button id="runContextTest" class="btn primary">▶ Rodar comparação (2 chamadas)</button>
+      <div id="ctxResult" class="ctx-result" hidden></div>
+    </div>
+  </div>
+
+  <footer class="wrap muted small">
+    Estuda Aí · protótipo acadêmico · Trabalho Prático 1 de Engenharia de Prompt
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

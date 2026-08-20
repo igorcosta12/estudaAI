@@ -1,0 +1,10 @@
+# nunca versione chaves de API
+.env
+.env.*
+*.key
+
+# artefatos
+node_modules/
+log-chamadas.csv
+log-chamadas.json
+.DS_Store
