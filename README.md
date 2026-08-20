@@ -198,10 +198,8 @@ fonte descrita na tabela do enunciado para o Google AI Studio (curl na API).
 Print do painel de log do app, com as quatro chamadas e o total da sessão — os mesmos números da tabela da
 seção 6:
 
-<!-- Igor: arraste o print do painel de log para DENTRO desta linha no editor do README no GitHub.
-     O GitHub troca sozinho o src abaixo por um link user-attachments/assets/... e a imagem passa a renderizar. -->
 <p align="center">
-  <img width="820" alt="Painel de log de chamadas do app, com tokens de entrada/saída, thoughts e custo por chamada" src="COLE-AQUI-ARRASTANDO-A-IMAGEM-NO-GITHUB" />
+  <img width="820" alt="Painel de log de chamadas do app, com tokens de entrada/saída, thoughts e custo por chamada" src="https://github.com/user-attachments/assets/d77a019c-e3a8-4fec-a74e-b59328228b1b" />
 </p>
 
 O arquivo exportado (`log-chamadas.csv` / `log-chamadas.json`, pelos botões de download do app) também pode
@@ -211,8 +209,7 @@ ser anexado na raiz do repositório como comprovação adicional.
 
 ## 8. URL publicada — *entrega obrigatória*
 
-<!-- Igor: cole a URL publicada aqui. -->
-**URL:** `https://SEU-USUARIO.github.io/estuda-ai/`
+**URL:** `https://igorcosta12.github.io/estudaAI/`
 
 O passo a passo de deploy está em [`GUIA-DEPLOY.md`](GUIA-DEPLOY.md).
 
