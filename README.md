@@ -1,12 +1,6 @@
 # 🧠 Estuda Aí — Gerador de Simulados com IA
 
 Trabalho Prático 1 · Engenharia de Prompt e Contexto na Prática
-
-> **Como preencher este README:** tudo que já dá pra escrever de antemão (system prompt, técnica,
-> metodologia, fórmulas) está pronto. Os pontos marcados com **`⬜ EVIDÊNCIA:`** e **`⬜ PREENCHER:`**
-> são as partes que **você** completa depois de rodar o app com a sua chave — são as chamadas reais,
-> os números de token e os prints de tela. Sem esses prints, o item não pontua (ver seção 9 da rubrica).
-
 ---
 
 ## 1. O que o projeto faz e opção escolhida
