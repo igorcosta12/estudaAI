@@ -78,11 +78,13 @@ const RESPONSE_SCHEMA = {
 /* ---------------------------------------------------------------------
    4) PREÇOS OFICIAIS (paid tier) — tabela do Google, por 1M de tokens.
    Fonte: ai.google.dev/gemini-api/docs/pricing (conferida em 2026-08-20).
-   Uso real no free tier = R$0. Cálculo abaixo é HIPOTÉTICO (requisito 4).
+   Preço promocional vigente até 31/12/2026. Uso real no free tier = R$0.
+   Cálculo abaixo é HIPOTÉTICO (requisito 4).
    --------------------------------------------------------------------- */
 const PRICING = {
-  "gemini-2.5-flash":      { in: 0.30, out: 2.50 },
-  "gemini-2.5-flash-lite": { in: 0.10, out: 0.40 }
+  "gemini-3.6-flash":       { in: 0.75, out: 3.75 },
+  "gemini-3.7-flash":       { in: 0.75, out: 3.75 },
+  "gemini-3.5-flash-lite":  { in: 0.30, out: 2.50 }
 };
 
 const API_BASE = "https://generativelanguage.googleapis.com/v1beta/models";
@@ -102,6 +104,17 @@ function estimateCost(model, tokensIn, tokensOut) {
   return (tokensIn / 1e6) * p.in + (tokensOut / 1e6) * p.out;
 }
 function usd(n) { return "$" + n.toFixed(6); }
+
+// Parse tolerante: remove cercas ```json e texto fora do array/objeto JSON.
+function parseJsonLoose(text) {
+  let t = (text || "").trim();
+  t = t.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/i, "").trim();
+  try { return JSON.parse(t); } catch (_) {}
+  const first = Math.min(...[t.indexOf("["), t.indexOf("{")].filter(i => i >= 0));
+  const last = Math.max(t.lastIndexOf("]"), t.lastIndexOf("}"));
+  if (isFinite(first) && last > first) return JSON.parse(t.slice(first, last + 1));
+  throw new Error("A resposta do modelo não veio em JSON válido.");
+}
 
 function setStatus(msg, kind) {
   const el = $("status");
@@ -127,10 +140,7 @@ async function callGemini({ model, systemPrompt, fewShot, userText, useSchema })
     systemInstruction: { parts: [{ text: systemPrompt }] },
     contents,
     generationConfig: {
-      temperature: 0.7,
-      // desliga o "thinking" do 2.5 Flash: contagem de tokens de saída fica
-      // limpa e previsível (thoughts ~ 0), o que ajuda na tabela de custos.
-      thinkingConfig: { thinkingBudget: 0 }
+      temperature: 0.7
     }
   };
   if (useSchema) {
@@ -238,7 +248,7 @@ TAREFA: Gere ${n} questões de múltipla escolha de dificuldade ${diff} sobre es
       model, systemPrompt: SYSTEM_PROMPT, fewShot: FEW_SHOT, userText, useSchema: true
     });
     const custo = logCall("geração", model, usage);
-    quizData = JSON.parse(text);
+    quizData = parseJsonLoose(text);
     renderQuiz(quizData);
     setStatus(`✅ ${quizData.length} questões geradas. ` +
       `Entrada: ${usage.tokensIn} tokens · Saída: ${usage.tokensOut} tokens · Custo estimado: ${usd(custo)}.`, "ok");

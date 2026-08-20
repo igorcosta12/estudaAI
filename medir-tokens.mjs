@@ -16,10 +16,11 @@
 const KEY = process.env.GEMINI_API_KEY;
 if (!KEY) { console.error("Defina GEMINI_API_KEY no ambiente."); process.exit(1); }
 
-const MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash";
+const MODEL = process.env.GEMINI_MODEL || "gemini-3.6-flash";
 const PRICING = {
-  "gemini-2.5-flash":      { in: 0.30, out: 2.50 },
-  "gemini-2.5-flash-lite": { in: 0.10, out: 0.40 }
+  "gemini-3.6-flash":      { in: 0.75, out: 3.75 },
+  "gemini-3.7-flash":      { in: 0.75, out: 3.75 },
+  "gemini-3.5-flash-lite": { in: 0.30, out: 2.50 }
 };
 
 const SYSTEM_PROMPT =
@@ -43,7 +44,6 @@ async function call(contexto) {
     contents: [{ role: "user", parts: [{ text: `MATERIAL:\n${contexto}\n\nTAREFA: ${QUESTION}` }] }],
     generationConfig: {
       temperature: 0.7,
-      thinkingConfig: { thinkingBudget: 0 },
       responseMimeType: "application/json"
     }
   };

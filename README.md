@@ -153,10 +153,15 @@ custo = (tokens_input / 1.000.000) × preço_input + (tokens_output / 1.000.000)
 
 | Modelo | Preço input (1M) | Preço output (1M) |
 |--------|------------------|-------------------|
-| `gemini-2.5-flash` | US$ 0,30 | US$ 2,50 |
-| `gemini-2.5-flash-lite` | US$ 0,10 | US$ 0,40 |
+| `gemini-3.6-flash` | US$ 0,75 | US$ 3,75 |
+| `gemini-3.7-flash` | US$ 0,75 | US$ 3,75 |
+| `gemini-3.5-flash-lite` | US$ 0,30 | US$ 2,50 |
 
-Fonte: <https://ai.google.dev/gemini-api/docs/pricing>
+Fonte: <https://ai.google.dev/gemini-api/docs/pricing> (preço promocional vigente até 31/12/2026;
+depois passa a US$ 1,50 in / US$ 7,50 out no `gemini-3.6/3.7-flash`).
+
+> **Nota:** o modelo `gemini-2.5-flash` foi aposentado para contas novas; por isso o app usa a
+> geração 3.x (`gemini-3.6-flash` como padrão). Use na tabela abaixo o modelo que você realmente rodou.
 
 > **Free tier (AI Studio) custa R$ 0 de verdade.** Os valores abaixo são o **custo hipotético**, calculados
 > como se fosse tier pago, exatamente como o enunciado pede.
@@ -165,9 +170,9 @@ Fonte: <https://ai.google.dev/gemini-api/docs/pricing>
 
 | # | Tipo | Modelo | Tokens in | Tokens out | Custo (US$) |
 |---|------|--------|-----------|------------|-------------|
-| 1 | geração | gemini-2.5-flash | ⬜ | ⬜ | ⬜ |
-| 2 | contexto A (completo) | gemini-2.5-flash | ⬜ | ⬜ | ⬜ |
-| 3 | contexto B (trecho) | gemini-2.5-flash | ⬜ | ⬜ | ⬜ |
+| 1 | geração | gemini-3.6-flash | ⬜ | ⬜ | ⬜ |
+| 2 | contexto A (completo) | gemini-3.6-flash | ⬜ | ⬜ | ⬜ |
+| 3 | contexto B (trecho) | gemini-3.6-flash | ⬜ | ⬜ | ⬜ |
 | … | … | … | … | … | … |
 | **Total da sessão** | | | ⬜ | ⬜ | ⬜ |
 
