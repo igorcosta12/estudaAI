@@ -86,12 +86,10 @@ formato JSON, com distratores plausíveis e explicação no nível certo.
 > (o exemplo viaja junto). É um trade-off consciente — pagamos ~algumas centenas de tokens a mais por
 > chamada em troca de questões melhores. Dá pra medir isso no próprio log.
 
-**⬜ EVIDÊNCIA (print):** gere um simulado **com** o few-shot ligado e cole aqui o print das questões
-resultantes (mostrando distratores plausíveis + explicações). Opcional e forte: comente temporariamente a
-linha `if (fewShot) contents.push(...fewShot);` no `app.js`, gere de novo e compare — o print do "antes e
-depois" deixa a justificativa irrefutável.
+**⬜ EVIDÊNCIA (print):** 
+<img width="913" height="780" alt="image" src="https://github.com/user-attachments/assets/8828d859-099b-4fd5-9955-ff64c8eec6db" />
+<img width="873" height="790" alt="image" src="https://github.com/user-attachments/assets/b287d0f9-3e14-4bf5-89b7-e141fee68881" />
 
-`[COLE O PRINT AQUI]`
 
 ---
 
@@ -122,9 +120,9 @@ o "arquivo referenciado" é o `material-exemplo.md` que criamos de propósito (o
 
 | Versão | Contexto enviado | Tokens de entrada | Custo estimado (US$) |
 |--------|------------------|-------------------|----------------------|
-| A — completo | `material-exemplo.md` inteiro | ⬜ PREENCHER | ⬜ PREENCHER |
-| B — só o trecho | parágrafo da 3FN | ⬜ PREENCHER | ⬜ PREENCHER |
-| **Redução** | | ⬜ **PREENCHER %** | |
+| A — completo | `material-exemplo.md` inteiro | ⬜ 1971 | ⬜ $0.008067 |
+| B — só o trecho | parágrafo da 3FN | ⬜ 584 | ⬜ $0.003948 |
+| **Redução** | | ⬜ **70% %** | |
 
 > Exemplo ilustrativo do formato esperado (**troque pelos seus números reais do print**):
 > A = 1502 tokens in · B = 236 tokens in → **redução de ~84%** nos tokens de entrada, com a mesma
@@ -133,7 +131,7 @@ o "arquivo referenciado" é o `material-exemplo.md` que criamos de propósito (o
 **⬜ EVIDÊNCIA (print):** rode o teste no app e cole o print da tela de resultado (os dois cartões A/B com a
 redução %) **e** o print das linhas correspondentes no log.
 
-`[COLE O PRINT AQUI]`
+<img width="682" height="740" alt="image" src="https://github.com/user-attachments/assets/5c33cfff-8942-44b5-843d-c44801d94928" />
 
 *Alternativa por CLI:* dá pra reproduzir o mesmo teste no terminal com
 [`scripts/medir-tokens.mjs`](scripts/medir-tokens.mjs) (`export GEMINI_API_KEY=... && node scripts/medir-tokens.mjs`)
